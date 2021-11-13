@@ -18,11 +18,9 @@ breaktime = QtCore.QTime(0, 5, 0)
 
 class Ui_MainWindow(object):
     
-    
-    
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        #MainWindow.resize(800, 600)
+        MainWindow.resize(360, 250)
         MainWindow.setWindowIcon(QtGui.QIcon("domates-removebg-preview.png"))
         
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -34,27 +32,13 @@ class Ui_MainWindow(object):
         self.lcd.setSegmentStyle(QtWidgets.QLCDNumber.Flat)
         self.lcd.setStyleSheet("background-color:#ed1c24; border-radius:5px; color:papayawhip")
         
-        
-        ##self.label = QtWidgets.QLabel(self.centralwidget)
-        ##self.label.setGeometry(QtCore.QRect(100, 30, 600, 240))
-        
-        ##font = QtGui.QFont()
-        ##font.setPointSize(100)#also sets the minimum window size because font size cant be any smaller
-        ##self.label.setFont(font)
-        ##self.label.setAlignment(QtCore.Qt.AlignCenter)
-        ##self.label.setObjectName("label")
-        ##self.label.setStyleSheet("background-color:firebrick; border-radius:5px")
-        #self.label.
-        
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        #self.pushButton.setGeometry(QtCore.QRect(275, 300, 75, 25))
         self.pushButton.setObjectName("Başlat")
         
         self.pushButton.setStyleSheet("color:white; background-color:darkslateblue")
         self.pushButton.clicked.connect(self.ilkbutton)
         
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        #self.pushButton_2.setGeometry(QtCore.QRect(450, 300, 75, 25))
         self.pushButton_2.setObjectName("Sıfırla")
         self.pushButton_2.clicked.connect(self.ikibutton)
         self.pushButton_2.setStyleSheet("color:white; background-color:darkslateblue")
@@ -76,9 +60,7 @@ class Ui_MainWindow(object):
         
         self.timer0.setInterval(1000)
         self.timer0.timeout.connect(self.calculo)
-        #self.timer0.start()
         
-        ##layout.addWidget(self.label,0,0,1,2)
         layout.addWidget(self.lcd,0,0,1,2)
         layout.addWidget(self.pushButton,1,0)
         layout.addWidget(self.pushButton_2,1,1)
@@ -93,33 +75,27 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Pomodoro"))
         MainWindow.setStyleSheet("background-color:midnightblue")
-        ##self.label.setText(_translate("MainWindow", "25:00"))
         self.lcd.display(time.toString('mm:ss'))
         self.pushButton.setText(_translate("MainWindow", "Başlat"))
         self.pushButton_2.setText(_translate("MainWindow", "Sıfırla"))
 
-    def calculo(self):##MainWindow eklenmesine gerek yokmuş
+    def calculo(self):
         global time,working,breaktime,worktime
         if time == QtCore.QTime(0, 0, 0) and working:
-            #self.timer0.stop()
             time = breaktime
             working = False
             self.musik()
         if time == QtCore.QTime(0, 0, 0) and not working:
-            #self.timer0.stop()
             time = worktime
             working = True
             self.musik()
         if working:
-            ##self.label.setStyleSheet("background-color:firebrick; border-radius:5px")
             self.lcd.setStyleSheet("background-color:#ed1c24; border-radius:5px; color:papayawhip")
             MainWindow.setWindowTitle("Çalışma Zamanı")
         else:
-            ##self.label.setStyleSheet("background-color:deepskyblue; border-radius:5px")
             self.lcd.setStyleSheet("background-color:#22b14c; border-radius:5px; color:papayawhip")
             MainWindow.setWindowTitle("Mola Zamanı")
         time = time.addSecs(-1)
-        ##self.label.setText(time.toString("mm:ss"))
         self.lcd.display(time.toString('mm:ss'))
         
         
@@ -136,19 +112,16 @@ class Ui_MainWindow(object):
         if self.timer0.isActive():
             self.timer0.stop()
             self.pushButton.setText("Başlat")
-            #working = False
             print("üst bruh",working)
         else:
             self.timer0.start()
             self.pushButton.setText("Durdur")
-            #working = True
             print("alt bruh",working)
 
     def ikibutton(self):
         global time
         self.timer0.stop()
         time = QtCore.QTime(0, 0, 0)
-        ##self.label.setText(time.toString("mm:ss"))
         self.lcd.display(time.toString('mm:ss'))
         self.pushButton.setText("Başlat")
         working = False
